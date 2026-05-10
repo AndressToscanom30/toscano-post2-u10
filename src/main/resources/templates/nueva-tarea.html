@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Nueva Tarea — ToDoApp</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 480px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { margin-bottom: 1rem; }
+        label { display: block; margin-top: .75rem; font-weight: 600; }
+        input, textarea { width: 100%; padding: .5rem; border: 1px solid #999; box-sizing: border-box; }
+        button { margin-top: 1rem; padding: .5rem 1rem; border: 1px solid #333; background: #fff; cursor: pointer; }
+        a { display: inline-block; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <h1>Nueva Tarea</h1>
+
+    <form id="form-nueva-tarea" th:action="@{/tareas/nueva}" th:object="${tarea}" method="post">
+        <label for="input-titulo">Título</label>
+        <input id="input-titulo" type="text" th:field="*{titulo}" required />
+
+        <label for="input-descripcion">Descripción</label>
+        <textarea id="input-descripcion" rows="3" th:field="*{descripcion}"></textarea>
+
+        <button id="btn-guardar" type="submit">Guardar</button>
+    </form>
+
+    <a id="btn-volver" th:href="@{/tareas}">Volver</a>
+</body>
+</html>

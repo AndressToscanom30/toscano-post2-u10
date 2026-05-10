@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tareas — ToDoApp</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { margin-bottom: 1rem; }
+        button, .btn { padding: .5rem 1rem; border: 1px solid #333; background: #fff; cursor: pointer; }
+        ul { list-style: none; padding: 0; }
+        .tarea-item { padding: .5rem .75rem; border: 1px solid #ddd; margin-bottom: .25rem; }
+        .tarea-item.completada { text-decoration: line-through; color: #888; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Tareas</h1>
+
+    <a id="btn-nueva" class="btn" th:href="@{/tareas/nueva}">Nueva tarea</a>
+
+    <ul id="lista-tareas">
+        <li th:each="t : ${tareas}"
+            th:classappend="${t.completada} ? ' completada'"
+            class="tarea-item"
+            th:attr="data-id=${t.id}">
+            <span class="tarea-titulo" th:text="${t.titulo}">Título</span>
+        </li>
+    </ul>
+
+    <p th:if="${#lists.isEmpty(tareas)}" id="mensaje-vacio">No hay tareas registradas.</p>
+</body>
+</html>

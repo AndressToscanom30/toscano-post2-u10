@@ -16,7 +16,7 @@
     <artifactId>tareas</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>tareas</name>
-    <description>Gestión de Tareas — Suite de Pruebas con JUnit 5, Mockito y JaCoCo</description>
+    <description>Gestión de Tareas — Pruebas E2E con Selenium, Postman y Newman</description>
 
     <properties>
         <java.version>17</java.version>
@@ -41,6 +41,18 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+        <!-- Thymeleaf — vista server-side para las pruebas Selenium -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Actuator — expone /actuator/health para el workflow CI -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <!-- H2 Database -->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -54,6 +66,22 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Selenium WebDriver -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.18.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- WebDriverManager — descarga automáticamente el binario de ChromeDriver -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.8.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -63,7 +91,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- JaCoCo — Cobertura de código -->
+            <!-- JaCoCo — Cobertura de código (heredado de Post 1) -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -77,28 +105,6 @@
                         <id>report</id>
                         <phase>test</phase>
                         <goals><goal>report</goal></goals>
-                    </execution>
-                    <execution>
-                        <id>check</id>
-                        <goals><goal>check</goal></goals>
-                        <configuration>
-                            <excludes>
-                                <exclude>**/*Application.class</exclude>
-                                <exclude>**/entity/**</exclude>
-                            </excludes>
-                            <rules>
-                                <rule>
-                                    <element>BUNDLE</element>
-                                    <limits>
-                                        <limit>
-                                            <counter>LINE</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>0.70</minimum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

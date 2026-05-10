@@ -1,0 +1,64 @@
+name: API Tests con Newman
+
+on: [push, pull_request]
+
+jobs:
+  api-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: maven
+
+      - name: Compilar JAR (sin ejecutar tests)
+        run: mvn -B package -DskipTests
+
+      - name: Iniciar aplicación Spring Boot
+        run: |
+          nohup java -jar target/*.jar > app.log 2>&1 &
+          echo $! > app.pid
+
+      - name: Esperar a que /actuator/health responda UP
+        run: |
+          for i in {1..30}; do
+            if curl -sf http://localhost:8080/actuator/health | grep -q '"status":"UP"'; then
+              echo "Aplicación lista en intento $i"
+              exit 0
+            fi
+            echo "Intento $i: aplicación todavía no responde…"
+            sleep 2
+          done
+          echo "La aplicación no respondió a tiempo. Log:"
+          cat app.log
+          exit 1
+
+      - name: Instalar Newman
+        run: npm install -g newman
+
+      - name: Ejecutar colección Postman con Newman
+        run: |
+          newman run postman/ColeccionToDo.json \
+            --environment postman/env-ci.json \
+            --reporters cli,junit \
+            --reporter-junit-export newman-results.xml
+
+      - name: Subir reporte de Newman
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-results
+          path: newman-results.xml
+
+      - name: Detener aplicación
+        if: always()
+        run: |
+          if [ -f app.pid ]; then
+            kill $(cat app.pid) || true
+          fi
