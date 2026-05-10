@@ -8,22 +8,28 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
 
 import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class TareasE2ETest {
 
-    private static final String BASE_URL = "http://localhost:8080/tareas";
+    @LocalServerPort
+    private int port;
 
     private WebDriver driver;
     private WebDriverWait wait;
+
+    private String baseUrl() {
+        return "http://localhost:" + port + "/tareas";
+    }
 
     @BeforeEach
     void setUp() {
@@ -35,7 +41,7 @@ class TareasE2ETest {
 
         driver = new ChromeDriver(opts);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get(BASE_URL);
+        driver.get(baseUrl());
     }
 
     @Test

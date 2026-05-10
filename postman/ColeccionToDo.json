@@ -24,8 +24,8 @@
           "raw": "{\n  \"titulo\": \"Tarea desde Newman\",\n  \"descripcion\": \"Creada automáticamente por la colección Postman\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/tareas",
-          "host": ["{{baseUrl}}"],
+          "raw": "http://localhost:8080/api/tareas",
+          "host": ["http://localhost:8080"],
           "path": ["api", "tareas"]
         }
       },
@@ -66,8 +66,8 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/tareas/{{tareaId}}",
-          "host": ["{{baseUrl}}"],
+          "raw": "http://localhost:8080/api/tareas/{{tareaId}}",
+          "host": ["http://localhost:8080"],
           "path": ["api", "tareas", "{{tareaId}}"]
         }
       },
@@ -101,8 +101,8 @@
         "method": "PATCH",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/tareas/{{tareaId}}/completar",
-          "host": ["{{baseUrl}}"],
+          "raw": "http://localhost:8080/api/tareas/{{tareaId}}/completar",
+          "host": ["http://localhost:8080"],
           "path": ["api", "tareas", "{{tareaId}}", "completar"]
         }
       },
@@ -131,8 +131,8 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/tareas/{{tareaId}}",
-          "host": ["{{baseUrl}}"],
+          "raw": "http://localhost:8080/api/tareas/{{tareaId}}",
+          "host": ["http://localhost:8080"],
           "path": ["api", "tareas", "{{tareaId}}"]
         }
       },
@@ -166,8 +166,8 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/tareas/99999",
-          "host": ["{{baseUrl}}"],
+          "raw": "http://localhost:8080/api/tareas/99999",
+          "host": ["http://localhost:8080"],
           "path": ["api", "tareas", "99999"]
         }
       },
